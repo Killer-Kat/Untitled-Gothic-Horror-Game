@@ -6,19 +6,21 @@ public class BoomerangAttack : MonoBehaviour
 {
     public SpriteRenderer BoomerangSprite;
     public Rigidbody2D rb;
-    public float rotationValue;
+    public float rotationValue = -1.5f;
     public float returnSpeed;
     private float returnSpeedBoost = 0;
     bool IsReturning;
 
     Vector2 PlayerDist;
     [System.NonSerialized] public PlayerMovement playerMan;
+    private AudioManager audioMan;
 
     public float returnTimer = 3;
     // Start is called before the first frame update
     void Start()
     {
         playerMan = FindObjectOfType<PlayerMovement>();
+        audioMan = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -45,7 +47,10 @@ public class BoomerangAttack : MonoBehaviour
     {
         IsReturning = true;
         if (collision.gameObject.tag == "Player")
+        {
+            playerMan.Boomerangs += 1;
             Destroy(gameObject);
+        }
            
     }
 }
