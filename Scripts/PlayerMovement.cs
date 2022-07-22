@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private float attackTime = 1f;
     private float attackCounter = 1f;
     private bool isAttacking;
+    public GameObject Boomerang;
+    public float BoomerangThrowSpeed;
 
     [SerializeField] private InputActions movementAction;
     [SerializeField] private InputAction movement;
@@ -101,5 +103,8 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool("IsAttacking", true);
         weaponAnimator.SetBool("IsAttacking", true);
         isAttacking = true;
+       
+        GameObject Rang = Instantiate(Boomerang, transform.position + new Vector3(0 + lastMove.x * 2,0 +lastMove.y * 2,0),Quaternion.identity);
+        Rang.GetComponent<Rigidbody2D>().velocity = lastMove * BoomerangThrowSpeed;
     }
 }
