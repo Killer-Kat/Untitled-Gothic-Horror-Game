@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
+//using System;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Animator playerAnimator;
-    public Animator weaponAnimator;
+   // public Animator weaponAnimator; // Was trying to figure out how to use LPC weapon sprites but its on hold for now
     //public Animator TorsoAnimator;
     public SpriteRenderer playerSpriteRenderer;
 
@@ -25,10 +25,14 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 lastMove;
     public float moveSpeed = 5;
 
+    private AudioManager audioMan;
+    private int soundNum;
+
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        audioMan = FindObjectOfType<AudioManager>();
     }
     private void Awake()
     {
@@ -93,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
             if (attackCounter <= 0)
             {
                 playerAnimator.SetBool("IsAttacking", false);
-                weaponAnimator.SetBool("IsAttacking", false);
+                //weaponAnimator.SetBool("IsAttacking", false);
                 isAttacking = false;
             }
         }
@@ -115,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
             Boomerangs -= 1;
             GameObject Rang = Instantiate(Boomerang, transform.position + new Vector3(0 + lastMove.x * 2, 0 + lastMove.y * 2, 0), Quaternion.identity);
             Rang.GetComponent<Rigidbody2D>().velocity = lastMove * BoomerangThrowSpeed;
+            soundNum = Random.Range(1, 3);
+            audioMan.Play("ThrowBoomerang" + soundNum);
         } 
     }
 }

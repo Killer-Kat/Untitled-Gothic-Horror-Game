@@ -5,6 +5,7 @@ using UnityEngine;
 public class BreakableItems : MonoBehaviour
 {
     public GameObject ContainedItem;
+    public bool ContainsItem;
     public string BreakSound;
     private AudioManager audioMan;
 
@@ -29,6 +30,10 @@ public class BreakableItems : MonoBehaviour
     public void Break()
     {
         audioMan.Play(BreakSound);
+        if (ContainsItem)
+        {
+            Instantiate(ContainedItem, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 }
