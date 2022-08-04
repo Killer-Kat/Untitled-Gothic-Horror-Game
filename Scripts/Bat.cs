@@ -19,6 +19,9 @@ public class Bat : MonoBehaviour
     private float moveTime = 3f;
     public int direction;
 
+    public int color; //Currently doing a check for this every time the bat moves, need to implement better system
+    // 0 = purple 1 = black
+
 
 
     void Start()
@@ -27,6 +30,7 @@ public class Bat : MonoBehaviour
         pStats = FindObjectOfType<PlayerStats>();
         BatAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        BatAnimator.SetInteger("Color", color);
     }
 
     // Update is called once per frame

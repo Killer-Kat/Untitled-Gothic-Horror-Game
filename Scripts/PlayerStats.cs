@@ -50,6 +50,12 @@ public class PlayerStats : MonoBehaviour
         currentHealth -= dmg;
         UIMan.HealthBarUpdate();
     }
+
+    public void HealPlayer(int amt)
+    {
+        currentHealth -= amt;
+        UIMan.HealthBarUpdate();
+    }
     /*void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
     {
         if (newItem != null)
