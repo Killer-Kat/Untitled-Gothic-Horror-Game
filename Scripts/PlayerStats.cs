@@ -53,7 +53,11 @@ public class PlayerStats : MonoBehaviour
 
     public void HealPlayer(int amt)
     {
-        currentHealth -= amt;
+        currentHealth += amt;
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
         UIMan.HealthBarUpdate();
     }
     /*void OnEquipmentChanged(Equipment newItem, Equipment oldItem)

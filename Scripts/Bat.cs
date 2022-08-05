@@ -8,6 +8,7 @@ public class Bat : MonoBehaviour
     //Glitch with animation, its not playing the first frame of animation, maybe because sampling is set to 40
 
     private Animator BatAnimator;
+    private SpriteRenderer BatSprite;
     public Rigidbody2D rb;
     private AudioManager audioMan;
     private PlayerStats pStats;
@@ -31,6 +32,7 @@ public class Bat : MonoBehaviour
         BatAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         BatAnimator.SetInteger("Color", color);
+        BatSprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -75,6 +77,7 @@ public class Bat : MonoBehaviour
     }
     private void GetHurt()
     {
+        StartCoroutine(FlashRed());
         health -= 10;
         if (health <= 0)
         {
@@ -97,5 +100,13 @@ public class Bat : MonoBehaviour
         {
             GetHurt();
         }
+    }
+
+    public IEnumerator FlashRed() //www.youtube.com/watch?v=veFcxTNsfZY
+    {
+        BatSprite.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        BatSprite.color = Color.white;
+
     }
 }

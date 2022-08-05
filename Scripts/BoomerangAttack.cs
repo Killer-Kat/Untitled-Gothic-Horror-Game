@@ -40,7 +40,12 @@ public class BoomerangAttack : MonoBehaviour
         {
             rb.MovePosition(rb.position + PlayerDist * (returnSpeed + returnSpeedBoost) * Time.fixedDeltaTime);
             returnSpeedBoost += Time.deltaTime / 2;
-           // Debug.Log(returnSpeedBoost);
+            //Debug.Log(returnSpeedBoost);
+            if(returnSpeedBoost >= 3) //So your boomerang cant get stuck in walls, I should add a sound effect to let the player know that this has  happend
+            {
+                playerMan.Boomerangs += 1;
+                Destroy(gameObject);
+            }
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
