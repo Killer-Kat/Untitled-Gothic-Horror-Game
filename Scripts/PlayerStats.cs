@@ -10,20 +10,11 @@ public class PlayerStats : MonoBehaviour
     //Money and Inventory
     public int currentMoney;
     //Health and Armor
-    public int currentHealthPotions;
     public int currentHealth;
     public int maxHealth;
-    public int playerArmor;
     //Weapons and Equipment
     public int damage = 10;
     //General
-    public float moveSpeed = 5f;
-    public int currentScene;
-    //Stat modifiers
-    public int armormod = 0;
-    public int damagemod = 0;
-    public float speedmod = 0;
-    
     public static PlayerStats Instance { get; private set; }
 
     private void Awake()

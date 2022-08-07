@@ -27,6 +27,14 @@ public class BreakableItems : MonoBehaviour
             Break();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Attack" )
+        {
+            Break();
+        }
+    }
     public void Break()
     {
         audioMan.Play(BreakSound);

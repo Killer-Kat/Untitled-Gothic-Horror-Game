@@ -83,10 +83,12 @@ public class Spider : MonoBehaviour
         AIState = 0;
         yield return new WaitForSeconds(UnityEngine.Random.Range(3, 12));
         AIState = 2;
+        SpiderAnimator.SetBool("IsMoving", true);
     }
     private void FollowPlayer()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+        SpiderAnimator.SetBool("IsMoving", true);
         SpiderAnimator.SetFloat("Horizontal", (target.transform.position.x - transform.position.x));
         SpiderAnimator.SetFloat("Vertical", (target.transform.position.y - transform.position.y));
     }
@@ -116,6 +118,10 @@ public class Spider : MonoBehaviour
             AIState = 1;
             SpiderAnimator.SetBool("IsMoving", true);
         }
+        if (collision.gameObject.tag == "Attack")
+        {
+            GetHurt();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -126,9 +132,14 @@ public class Spider : MonoBehaviour
         }
         if (collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+           // GetHurt();
+           //Problem, spider uses a trigger to detect player. This means that we cant use a second trigger to hitscan because if anything enters the player searching trigger
+           //then that attack would damage the spider because there is no difference between the spider entering a trigger and something entering the spiders trigger.
+           //Only solution is to move the triggering logic to the attack and then have the attack call the object and damage it, I might do this in the future.
         }
     }
+
+
     private void GetHurt()
     {
         StartCoroutine(FlashRed());

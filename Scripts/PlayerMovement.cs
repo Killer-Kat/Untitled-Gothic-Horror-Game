@@ -13,9 +13,9 @@ public class PlayerMovement : MonoBehaviour
     //public Animator TorsoAnimator;
     public SpriteRenderer playerSpriteRenderer;
 
-    private float attackTime = 1f;
+    private float attackTime = 0.9f;
     private float attackCounter = 1f;
-    private bool isAttacking;
+    [SerializeField] private bool isAttacking;
     public GameObject Boomerang;
     public float BoomerangThrowSpeed;
     public int Boomerangs = 1;
@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     private AudioManager audioMan;
     private int soundNum;
+
+    [SerializeField] private GameObject SlashUp;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
        movementAction.Player.Attack.performed += Attack;
        movementAction.Player.Attack.Enable();
 
+        movementAction.Player.ThrowBooomerang.performed += ThrowBooomerang;
+        movementAction.Player.ThrowBooomerang.Enable();
+
         /*movementAction.Player.DrinkHealthPotion.performed += drinkHealthPotionCheck;
        movementAction.Player.DrinkHealthPotion.Enable();
 
@@ -62,7 +67,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if(isAttacking == false) { 
         rb.MovePosition(rb.position + movement.ReadValue<Vector2>() * moveSpeed * Time.fixedDeltaTime);  //moves the player object
+        }
     }
 
     private void Update()
@@ -99,18 +106,27 @@ public class PlayerMovement : MonoBehaviour
                 playerAnimator.SetBool("IsAttacking", false);
                 //weaponAnimator.SetBool("IsAttacking", false);
                 isAttacking = false;
+                moveSpeed = 5f;
             }
         }
     }
     private void Attack(InputAction.CallbackContext obj)
     {
         attackCounter = attackTime;
-       // playerAnimator.SetBool("IsAttacking", true);
-       // weaponAnimator.SetBool("IsAttacking", true);
+      
         isAttacking = true;
-        ThrowBoomerang();
-       
+        playerAnimator.SetBool("IsAttacking", true);
+
+        //Stop the player moving while attacking
+        moveSpeed = 0f;
+        rb.velocity = new Vector2(0, 0);
         
+
+        //ThrowBoomerang(); //Need to move this to an item
+
+        soundNum = Random.Range(1, 5);
+        audioMan.Play("SlashAttack" + soundNum);
+
     }
     public void ThrowBoomerang()
     {
@@ -122,5 +138,10 @@ public class PlayerMovement : MonoBehaviour
             soundNum = Random.Range(1, 3);
             audioMan.Play("ThrowBoomerang" + soundNum);
         } 
+    }
+
+    private void ThrowBooomerang(InputAction.CallbackContext obj)
+    {
+        ThrowBoomerang();
     }
 }

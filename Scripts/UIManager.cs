@@ -28,16 +28,14 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Invoke("HealthBarUpdate", 1);
-        healthPotionGUIupdate();
+        
         DontDestroyOnLoad(gameObject);
     }
     public void UpdateAll()
     {
         HealthBarUpdate();
-        
+
         coinGUIupdate();
-        healthPotionGUIupdate();
-        armorGUIupdate();
     }
    
     public void HealthBarUpdate()
@@ -51,12 +49,6 @@ public class UIManager : MonoBehaviour
     {
     coinText.text = "" + PlayerStats.Instance.currentMoney;
     }
-    public void healthPotionGUIupdate()
-    {
-       // healthPotionText.text = "" + PlayerStats.Instance.currentHealthPotions;
-    }
-    public void armorGUIupdate()
-    {
-        armorText.text = "Armor: " + (PlayerStats.Instance.playerArmor + PlayerStats.Instance.armormod);
-    }
+
+    
 }

@@ -102,6 +102,14 @@ public class Bat : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Attack")
+        {
+            GetHurt();
+        }
+    }
+
     public IEnumerator FlashRed() //www.youtube.com/watch?v=veFcxTNsfZY
     {
         BatSprite.color = Color.red;

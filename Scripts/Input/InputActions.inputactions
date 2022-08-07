@@ -11,7 +11,8 @@
                     "id": "72b86617-1031-4cad-8e9a-b46aafb09aa6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Attack",
@@ -19,7 +20,17 @@
                     "id": "da63d32d-8a96-487e-a681-d1aa78b51997",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThrowBooomerang",
+                    "type": "Button",
+                    "id": "b2d3d731-cc48-4a5c-8666-3250aa15ca14",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -108,6 +119,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9abaebe-2ec0-4205-8f66-bf21452c8664",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowBooomerang",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

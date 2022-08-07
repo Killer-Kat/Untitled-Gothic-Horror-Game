@@ -21,6 +21,7 @@ public class HealthPickup : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             pStats.HealPlayer(10);
+            Destroy(gameObject);
         }
     }
 }
