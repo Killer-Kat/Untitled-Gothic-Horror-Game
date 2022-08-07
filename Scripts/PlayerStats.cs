@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     public int currentHealth;
     public int maxHealth;
     //Weapons and Equipment
-    public int damage = 10;
+    public int damage = 10; //Not currently used
     //General
     public static PlayerStats Instance { get; private set; }
 
@@ -50,6 +50,12 @@ public class PlayerStats : MonoBehaviour
             currentHealth = maxHealth;
         }
         UIMan.HealthBarUpdate();
+    }
+
+    public void GetMoney(int amt) //If only it were that easy in real life.
+    {
+        currentMoney += amt;
+        UIMan.coinGUIupdate();
     }
     /*void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
     {

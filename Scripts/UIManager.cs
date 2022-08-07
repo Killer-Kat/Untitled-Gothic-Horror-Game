@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        Invoke("HealthBarUpdate", 1);
+        Invoke("UpdateAll", 1);
         
         DontDestroyOnLoad(gameObject);
     }

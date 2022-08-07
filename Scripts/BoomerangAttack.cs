@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Killer-Kat 
 public class BoomerangAttack : MonoBehaviour
 {
     public SpriteRenderer BoomerangSprite;
@@ -15,7 +15,7 @@ public class BoomerangAttack : MonoBehaviour
     [System.NonSerialized] public PlayerMovement playerMan;
     private AudioManager audioMan;
 
-    public float returnTimer = 3;
+    public float returnTimer = 2; //How long before the boomerang returns
     // Start is called before the first frame update
     void Start()
     {
