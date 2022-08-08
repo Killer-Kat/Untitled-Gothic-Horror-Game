@@ -12,6 +12,7 @@ public class Bat : MonoBehaviour
     public Rigidbody2D rb;
     private AudioManager audioMan;
     private PlayerStats pStats;
+    [SerializeField] private GameObject deathCloud;
     public int health = 10;
     public int Damage = 5;
     public float moveSpeed = 3f;
@@ -88,6 +89,7 @@ public class Bat : MonoBehaviour
     private void Die()
     {
         audioMan.Play(DeathSound);
+        Instantiate(deathCloud, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
     private void OnCollisionEnter2D(Collision2D collision)

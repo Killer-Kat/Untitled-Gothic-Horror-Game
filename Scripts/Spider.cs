@@ -7,6 +7,7 @@ public class Spider : MonoBehaviour
     private Animator SpiderAnimator;
     private SpriteRenderer SpiderSprite;
     public Rigidbody2D rb;
+    [SerializeField] private GameObject deathCloud;
     private AudioManager audioMan;
     private PlayerStats pStats;
     public int health = 25;
@@ -115,12 +116,14 @@ public class Spider : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            AIState = 1;
-            SpiderAnimator.SetBool("IsMoving", true);
+
         }
         if (collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+             GetHurt();
+            //Problem, spider uses a trigger to detect player. This means that we cant use a second trigger to hitscan because if anything enters the player searching trigger
+            //then that attack would damage the spider because there is no difference between the spider entering a trigger and something entering the spiders trigger.
+            //Only solution is to move the triggering logic to the attack and then have the attack call the object and damage it, I might do this in the future.
         }
     }
 
@@ -132,13 +135,15 @@ public class Spider : MonoBehaviour
         }
         if (collision.gameObject.tag == "Attack")
         {
-           // GetHurt();
-           //Problem, spider uses a trigger to detect player. This means that we cant use a second trigger to hitscan because if anything enters the player searching trigger
-           //then that attack would damage the spider because there is no difference between the spider entering a trigger and something entering the spiders trigger.
-           //Only solution is to move the triggering logic to the attack and then have the attack call the object and damage it, I might do this in the future.
+            GetHurt();
         }
     }
 
+    public void SpiderSense() //My Spider Sense is Tingling!
+    {
+        AIState = 1;
+        SpiderAnimator.SetBool("IsMoving", true);
+    }
 
     private void GetHurt()
     {
@@ -155,6 +160,7 @@ public class Spider : MonoBehaviour
     private void Die()
     {
         audioMan.Play(DeathSound);
+        Instantiate(deathCloud, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
