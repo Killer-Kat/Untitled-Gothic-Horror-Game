@@ -18,6 +18,7 @@ public class BoomerangAttack : MonoBehaviour
     Vector2 PlayerDist;
     [System.NonSerialized] public PlayerMovement playerMan;
     private AudioManager audioMan;
+    private UIManager UIMan;
    
 
     public float returnTimer = 2; //How long before the boomerang returns
@@ -27,6 +28,7 @@ public class BoomerangAttack : MonoBehaviour
         playerMan = FindObjectOfType<PlayerMovement>();
         audioMan = FindObjectOfType<AudioManager>();
         BoomerangAnimator = GetComponent<Animator>();
+        UIMan = FindObjectOfType<UIManager>(); //Maybe I should make the UI man a singleton
     }
 
     // Update is called once per frame
@@ -60,7 +62,8 @@ public class BoomerangAttack : MonoBehaviour
         IsReturning = true;
         if (collision.gameObject.tag == "Player")
         {
-            playerMan.Boomerangs += 1;
+            PlayerStats.Instance.Boomerangs += 1;
+            UIMan.BoomerangCounterUpdate();
             Destroy(gameObject);
         }
            

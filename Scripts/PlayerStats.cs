@@ -14,6 +14,7 @@ public class PlayerStats : MonoBehaviour
     public int maxHealth;
     //Weapons and Equipment
     public int damage = 10; //Not currently used
+    public int Boomerangs = 1;
     //General
     public static PlayerStats Instance { get; private set; }
 

@@ -9,27 +9,26 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Animator playerAnimator;
-   // public Animator weaponAnimator; // Was trying to figure out how to use LPC weapon sprites but its on hold for now
-    //public Animator TorsoAnimator;
     public SpriteRenderer playerSpriteRenderer;
 
     private float attackTime = 0.9f;
     private float attackCounter = 1f;
     [SerializeField] private bool isAttacking;
-    public GameObject Boomerang;
-    public float BoomerangThrowSpeed;
-    public int Boomerangs = 1;
+    public GameObject Boomerang; //Boomerang prefab 
+    public float BoomerangThrowSpeed; //How fast does the boomerang move once spawned
+    
 
     [SerializeField] private InputActions movementAction;
     [SerializeField] private InputAction movement;
-    public Vector2 lastMove;
+    public Vector2 lastMove; //The direction we our facing based on our last move.
     public float moveSpeed = 5;
 
     [SerializeField] private PauseMenu pMenu;
+    [SerializeField] private UIManager UIMan;
     private AudioManager audioMan;
     private int soundNum;
 
-    [SerializeField] private GameObject SlashUp;
+    [SerializeField] private GameObject SlashUp; //Do we use this? I dont think so need to double check
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         audioMan = FindObjectOfType<AudioManager>();
         pMenu = FindObjectOfType<PauseMenu>(true); //Dont forget to enable the Pause menu container gameobject, only the panel should ever be disabled.
+        UIMan = FindObjectOfType<UIManager>(); //Maybe I should make the UI man a singleton
     }
     private void Awake()
     {
@@ -135,13 +135,14 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ThrowBoomerang()
     {
-        if(Boomerangs > 0)
+        if(PlayerStats.Instance.Boomerangs > 0)
         {
-            Boomerangs -= 1;
+            PlayerStats.Instance.Boomerangs -= 1;
             GameObject Rang = Instantiate(Boomerang, transform.position + new Vector3(0 + lastMove.x * 2, 0 + lastMove.y * 2, 0), Quaternion.identity);
             Rang.GetComponent<Rigidbody2D>().velocity = lastMove * BoomerangThrowSpeed;
             soundNum = Random.Range(1, 3);
             audioMan.Play("ThrowBoomerang" + soundNum);
+            UIMan.BoomerangCounterUpdate();
         } 
     }
 

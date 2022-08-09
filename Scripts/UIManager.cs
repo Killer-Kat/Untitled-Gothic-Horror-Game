@@ -9,13 +9,12 @@ public class UIManager : MonoBehaviour
     public Slider healthBar;
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI coinText;
-    public TextMeshProUGUI healthPotionText;
-    public TextMeshProUGUI armorText;
+    public TextMeshProUGUI BoomerangText;
     private GameObject[] GUIs;
 
     //This is so that I dont generate multiple GUI's 
     //Prob not needed anymore, this was from my old game
-    private void OnLevelWasLoaded(int level)
+    private void OnLevelWasLoaded(int level) 
     {
         GUIs = GameObject.FindGameObjectsWithTag("MainGUI");
 
@@ -36,6 +35,8 @@ public class UIManager : MonoBehaviour
         HealthBarUpdate();
 
         coinGUIupdate();
+
+        BoomerangCounterUpdate();
     }
    
     public void HealthBarUpdate()
@@ -50,5 +51,9 @@ public class UIManager : MonoBehaviour
     coinText.text = "" + PlayerStats.Instance.currentMoney;
     }
 
+    public void BoomerangCounterUpdate()
+    {
+        BoomerangText.text = "" + PlayerStats.Instance.Boomerangs;
+    }
     
 }
