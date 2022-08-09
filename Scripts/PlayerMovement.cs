@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 lastMove;
     public float moveSpeed = 5;
 
+    [SerializeField] private PauseMenu pMenu;
     private AudioManager audioMan;
     private int soundNum;
 
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         audioMan = FindObjectOfType<AudioManager>();
+        pMenu = FindObjectOfType<PauseMenu>(true); //Dont forget to enable the Pause menu container gameobject, only the panel should ever be disabled.
     }
     private void Awake()
     {
@@ -49,8 +51,11 @@ public class PlayerMovement : MonoBehaviour
        movementAction.Player.Attack.performed += Attack;
        movementAction.Player.Attack.Enable();
 
-        movementAction.Player.ThrowBooomerang.performed += ThrowBooomerang;
-        movementAction.Player.ThrowBooomerang.Enable();
+       movementAction.Player.ThrowBooomerang.performed += ThrowBooomerang;
+       movementAction.Player.ThrowBooomerang.Enable();
+
+       movementAction.Player.PauseGame.performed += PauseGame;
+       movementAction.Player.PauseGame.Enable();
 
         /*movementAction.Player.DrinkHealthPotion.performed += drinkHealthPotionCheck;
        movementAction.Player.DrinkHealthPotion.Enable();
@@ -143,5 +148,10 @@ public class PlayerMovement : MonoBehaviour
     private void ThrowBooomerang(InputAction.CallbackContext obj)
     {
         ThrowBoomerang();
+    }
+
+    private void PauseGame(InputAction.CallbackContext obj)
+    {
+        pMenu.getPing();
     }
 }
