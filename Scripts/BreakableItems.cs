@@ -34,6 +34,10 @@ public class BreakableItems : MonoBehaviour
         {
             Break();
         }
+        else if (collision.gameObject.tag == "Explosion")
+        {
+            Break();
+        }
     }
     public void Break()
     {

@@ -6,6 +6,7 @@ public class PlayerStats : MonoBehaviour
 {
     [System.NonSerialized] public UIManager UIMan;
     [System.NonSerialized] public PlayerMovement playerMan;
+    [System.NonSerialized] public AudioManager audioMan;
     
     //Money and Inventory
     public int currentMoney;
@@ -15,6 +16,7 @@ public class PlayerStats : MonoBehaviour
     //Weapons and Equipment
     public int damage = 10; //Not currently used
     public int Boomerangs = 1;
+    public int regularBombs = 3;
     //General
     public static PlayerStats Instance { get; private set; }
 
@@ -36,6 +38,7 @@ public class PlayerStats : MonoBehaviour
        // EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
         UIMan = FindObjectOfType<UIManager>();
         playerMan = FindObjectOfType<PlayerMovement>();
+        audioMan = FindObjectOfType<AudioManager>();
     }
     public void HurtPlayer(int dmg)
     {
@@ -56,6 +59,7 @@ public class PlayerStats : MonoBehaviour
     public void GetMoney(int amt) //If only it were that easy in real life.
     {
         currentMoney += amt;
+        audioMan.Play("CoinClink");
         UIMan.coinGUIupdate();
     }
     /*void OnEquipmentChanged(Equipment newItem, Equipment oldItem)

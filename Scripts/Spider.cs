@@ -75,10 +75,6 @@ public class Spider : MonoBehaviour
                 break;
         }
     }
-    private void ChangeAIState(int state)
-    {
-        AIState = state;
-    }
     IEnumerator IdleTime()
     {
         AIState = 0;
@@ -117,11 +113,13 @@ public class Spider : MonoBehaviour
 
         if (collision.gameObject.tag == "Attack")
         {
-             GetHurt();
-            //Problem, spider uses a trigger to detect player. This means that we cant use a second trigger to hitscan because if anything enters the player searching trigger
-            //then that attack would damage the spider because there is no difference between the spider entering a trigger and something entering the spiders trigger.
-            //Only solution is to move the triggering logic to the attack and then have the attack call the object and damage it, I might do this in the future.
+            GetHurt(10);
         }
+        else if (collision.gameObject.tag == "Explosion")
+        {
+            GetHurt(collision.gameObject.GetComponent<Explosion>().damage);
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -132,8 +130,9 @@ public class Spider : MonoBehaviour
         }
         if (collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+            GetHurt(10);
         }
+        
     }
 
     public void SpiderSense() //My Spider Sense is Tingling!
@@ -142,10 +141,10 @@ public class Spider : MonoBehaviour
         SpiderAnimator.SetBool("IsMoving", true);
     }
 
-    private void GetHurt()
+    private void GetHurt(int dmg)
     {
         StartCoroutine(FlashRed());
-        health -= 10;
+        health -= dmg;
         audioMan.Play(HurtSound);
         if (health <= 0)
         {

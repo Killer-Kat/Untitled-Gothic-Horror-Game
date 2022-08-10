@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI BoomerangText;
+    public TextMeshProUGUI regularBombText;
     private GameObject[] GUIs;
 
     //This is so that I dont generate multiple GUI's 
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
         coinGUIupdate();
 
         BoomerangCounterUpdate();
+        BombCounterUpdate();
     }
    
     public void HealthBarUpdate()
@@ -55,5 +57,10 @@ public class UIManager : MonoBehaviour
     {
         BoomerangText.text = "" + PlayerStats.Instance.Boomerangs;
     }
-    
+
+    public void BombCounterUpdate()
+    {
+        regularBombText.text = "" + PlayerStats.Instance.regularBombs;
+    }
+
 }

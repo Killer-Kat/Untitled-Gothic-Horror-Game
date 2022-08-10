@@ -76,10 +76,10 @@ public class Bat : MonoBehaviour
 
         }
     }
-    private void GetHurt()
+    private void GetHurt(int dmg)
     {
         StartCoroutine(FlashRed());
-        health -= 10;
+        health -= dmg;
         if (health <= 0)
         {
             Die();
@@ -100,7 +100,7 @@ public class Bat : MonoBehaviour
         }
         if (collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+            GetHurt(10);
         }
     }
 
@@ -108,7 +108,11 @@ public class Bat : MonoBehaviour
     {
         if(collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+            GetHurt(10);
+        }
+        else if (collision.gameObject.tag == "Explosion")
+        {
+            GetHurt(collision.gameObject.GetComponent<Explosion>().damage);
         }
     }
 

@@ -41,7 +41,7 @@ public class Zombie : MonoBehaviour
         }
         if (collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+            GetHurt(10);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -49,8 +49,11 @@ public class Zombie : MonoBehaviour
 
         if (collision.gameObject.tag == "Attack")
         {
-            GetHurt();
+            GetHurt(10);
            
+        } else if (collision.gameObject.tag == "Explosion")
+        {
+            GetHurt(collision.gameObject.GetComponent<Explosion>().damage);
         }
     }
     private void FollowPlayer()
@@ -60,10 +63,10 @@ public class Zombie : MonoBehaviour
         ZombieAnimator.SetFloat("Horizontal", (target.transform.position.x - transform.position.x));
         ZombieAnimator.SetFloat("Vertical", (target.transform.position.y - transform.position.y));
     }
-    private void GetHurt()
+    private void GetHurt(int dmg)
     {
         StartCoroutine(FlashRed());
-        health -= 10;
+        health -= dmg;
         audioMan.Play(HurtSound);
         if (health <= 0)
         {

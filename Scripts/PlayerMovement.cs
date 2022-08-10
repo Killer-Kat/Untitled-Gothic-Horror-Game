@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private float attackTime = 0.9f;
     private float attackCounter = 1f;
     [SerializeField] private bool isAttacking;
-    public GameObject Boomerang; //Boomerang prefab 
+    public GameObject Boomerang; //Boomerang prefab
+    public GameObject RegularBomb; //Regular Bomb prefab 
     public float BoomerangThrowSpeed; //How fast does the boomerang move once spawned
     
 
@@ -56,6 +57,9 @@ public class PlayerMovement : MonoBehaviour
 
        movementAction.Player.PauseGame.performed += PauseGame;
        movementAction.Player.PauseGame.Enable();
+
+        movementAction.Player.PlaceBomb.performed += PlaceBomb;
+        movementAction.Player.PlaceBomb.Enable();
 
         /*movementAction.Player.DrinkHealthPotion.performed += drinkHealthPotionCheck;
        movementAction.Player.DrinkHealthPotion.Enable();
@@ -149,6 +153,17 @@ public class PlayerMovement : MonoBehaviour
     private void ThrowBooomerang(InputAction.CallbackContext obj)
     {
         ThrowBoomerang();
+    }
+
+    private void PlaceBomb(InputAction.CallbackContext obj)
+    {
+        if (PlayerStats.Instance.regularBombs > 0)
+        {
+            PlayerStats.Instance.regularBombs -= 1;
+            Instantiate(RegularBomb, transform.position + new Vector3(0 + lastMove.x * 1, 0 + lastMove.y * 1, 0), Quaternion.identity);
+            UIMan.BombCounterUpdate();
+            
+        }
     }
 
     private void PauseGame(InputAction.CallbackContext obj)
