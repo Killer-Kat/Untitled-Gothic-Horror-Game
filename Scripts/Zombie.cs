@@ -16,7 +16,11 @@ public class Zombie : MonoBehaviour
     public string DeathSound = "";
     public string HurtSound = "";
     private Transform target;
-    // Start is called before the first frame update
+
+    [SerializeField] private int AIState = 0;
+    public bool isPlayingDead = false;
+    public bool isAggro = false;
+    
     void Start()
     {
         audioMan = FindObjectOfType<AudioManager>();
@@ -26,12 +30,24 @@ public class Zombie : MonoBehaviour
         ZombieSprite = GetComponent<SpriteRenderer>();
 
         target = FindObjectOfType<PlayerMovement>().transform;
+        ZombieAnimator.SetBool("isPlayingDead", isPlayingDead);
     }
 
     // Update is called once per frame
     void Update()
     {
-        FollowPlayer(); //Need to implement other AI behavior, not sure what I want to do yet
+        switch (AIState)
+        {
+            case 0:
+                FollowPlayer(); //Need to implement other AI behavior, not sure what I want to do yet
+                break;
+            case 1:
+                if (isPlayingDead)
+                {
+                    //Do nothing
+                } else { AIState = 0; }
+                break;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -65,13 +81,16 @@ public class Zombie : MonoBehaviour
     }
     private void GetHurt(int dmg)
     {
-        StartCoroutine(FlashRed());
+        
         health -= dmg;
         audioMan.Play(HurtSound);
         if (health <= 0)
         {
             Die();
         }
+        StartCoroutine(FlashRed());
+        isAggro = true;
+        ZombieAnimator.SetBool("isAggro", true);
 
     }
 

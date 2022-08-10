@@ -6,6 +6,7 @@ public class BreakableItems : MonoBehaviour
 {
     public GameObject ContainedItem;
     public bool ContainsItem;
+    public bool isBombOnly; //Can the item only be broken by bombs?
     public string BreakSound;
     private AudioManager audioMan;
 
@@ -22,7 +23,7 @@ public class BreakableItems : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Attack")
+        if (collision.gameObject.tag == "Attack" && isBombOnly == false)
         {
             Break();
         }
@@ -30,7 +31,7 @@ public class BreakableItems : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Attack" )
+        if (collision.gameObject.tag == "Attack" && isBombOnly == false)
         {
             Break();
         }
