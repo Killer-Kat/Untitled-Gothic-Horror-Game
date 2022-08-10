@@ -15,6 +15,7 @@ public class Zombie : MonoBehaviour
     public float moveSpeed = 3f;
     public string DeathSound = "";
     public string HurtSound = "";
+    private Transform target;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +24,14 @@ public class Zombie : MonoBehaviour
         ZombieAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         ZombieSprite = GetComponent<SpriteRenderer>();
+
+        target = FindObjectOfType<PlayerMovement>().transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        FollowPlayer(); //Need to implement other AI behavior, not sure what I want to do yet
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -49,6 +52,13 @@ public class Zombie : MonoBehaviour
             GetHurt();
            
         }
+    }
+    private void FollowPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+        ZombieAnimator.SetBool("IsMoving", true);
+        ZombieAnimator.SetFloat("Horizontal", (target.transform.position.x - transform.position.x));
+        ZombieAnimator.SetFloat("Vertical", (target.transform.position.y - transform.position.y));
     }
     private void GetHurt()
     {
